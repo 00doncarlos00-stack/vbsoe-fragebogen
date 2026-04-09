@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>VBSÖ Ortsgruppen-Fragebogen</title>
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-light: #2a5a8c;
+  --primary-dark: #0f2440;
+  --gold: #e8a020;
+  --gold-light: #f0c060;
+  --green: #2e7d32;
+  --green-light: #4caf50;
+  --bg: #f4f6f9;
+  --white: #ffffff;
+  --gray-50: #fafbfc;
+  --gray-100: #f0f2f5;
+  --gray-200: #e4e7ec;
+  --gray-300: #d0d5dd;
+  --gray-400: #98a2b3;
+  --gray-500: #667085;
+  --gray-600: #475467;
+  --gray-700: #344054;
+  --gray-800: #1d2939;
+  --red: #d32f2f;
+  --red-light: #ffebee;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --transition: 0.2s ease;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--gray-800);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Header */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
+  color: white;
+  padding: 20px 24px 16px;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-logo { font-size: 40px; line-height: 1; }
+
+.header-text h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.header-text p {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+/* Tab Navigation */
+.tab-nav {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  padding: 0 24px;
+  background: transparent;
+  margin-top: -1px;
+}
+
+.tab-nav-wrapper {
+  background: var(--primary-dark);
+  padding-bottom: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 14px 12px;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: all var(--transition);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.tab-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+
+.tab-btn.active {
+  background: var(--bg);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-btn .tab-icon { font-size: 18px; }
+
+/* Main Content */
+.main-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.tab-panel { display: none; animation: fadeIn 0.3s ease; }
+.tab-panel.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Cards */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: box-shadow var(--transition);
+}
+
+.card:hover { box-shadow: var(--shadow-md); }
+
+/* OG Selector */
+.og-selector-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.og-select-wrapper {
+  position: relative;
+}
+
+.og-select-wrapper select {
+  width: 100%;
+  padding: 16px 48px 16px 16px;
+  font-size: 16px;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  background: white;
+  color: var(--gray-800);
+  appearance: none;
+  cursor: pointer;
+  font-family: inherit;
+  min-height: 54px;
+  transition: border-color var(--transition);
+}
+
+.og-select-wrapper select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26,58,92,0.1);
+}
+
+.og-select-wrapper::after {
+  content: '\25BC';
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-400);
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.og-info-banner {
+  display: none;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+}
+
+.og-info-banner.visible { display: block; animation: fadeIn 0.3s ease; }
+
+.og-info-banner h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+
+.og-info-banner .og-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.og-info-banner .og-meta span { display: flex; align-items: center; gap: 6px; }
+
+/* Form Sections */
+.section-header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 16px 24px;
+  border-radius: var(--radius-sm);
+  margin: 28px 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-header .section-num {
+  background: rgba(255,255,255,0.2);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--gray-200);
+  transition: border-color var(--transition);
+}
+
+.form-group:hover, .form-group:focus-within {
+  border-left-color: var(--primary);
+}
+
+.form-group label, .form-group .q-label {
+  display: block;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--gray-700);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.form-group .q-number {
+  color: var(--primary);
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 12px 16px;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  background: white;
+  color: var(--gray-800);
+  width: 100%;
+  transition: all var(--transition);
+  min-height: 48px;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26,58,92,0.1);
+}
+
+textarea { min-height: 100px; resize: vertical; }
+
+/* Radio & Checkbox */
+.radio-group, .checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.radio-option, .checkbox-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+.radio-option input[type="radio"],
+.checkbox-option input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-option label,
+.checkbox-option label {
+  display: flex;
+  align-items: center;
+  padding: 10px 18px;
+  border: 2px solid var(--gray-200);
+  border-radius: 24px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-600);
+  background: white;
+  transition: all var(--transition);
+  white-space: nowrap;
+  min-height: 44px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.radio-option label:hover,
+.checkbox-option label:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.radio-option input:checked + label {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.checkbox-option input:checked + label {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Sport table */
+.sport-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 8px;
+}
+
+.sport-table th {
+  background: var(--primary);
+  color: white;
+  padding: 12px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.sport-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+.sport-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+
+.sport-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.sport-table tr:hover td { background: var(--gray-50); }
+
+.sport-table input[type="number"] {
+  width: 70px;
+  min-height: 40px;
+  padding: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.sport-table .sport-check {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: var(--green);
+}
+
+/* Trainer table */
+.trainer-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 8px;
+}
+
+.trainer-table th {
+  background: var(--primary);
+  color: white;
+  padding: 12px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.trainer-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+.trainer-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+
+.trainer-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 14px;
+}
+
+.trainer-table input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: var(--green);
+}
+
+.trainer-table input[type="number"] {
+  width: 70px;
+  min-height: 40px;
+  padding: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Notes field */
+.notes-field {
+  margin-top: 10px;
+}
+
+.notes-field label {
+  font-size: 13px !important;
+  color: var(--gray-500) !important;
+  font-weight: 500 !important;
+}
+
+/* Inline fields */
+.inline-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .inline-fields { grid-template-columns: 1fr; }
+}
+
+.inline-field label {
+  font-size: 13px;
+  color: var(--gray-500);
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-height: 52px;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--primary-dark);
+  box-shadow: var(--shadow), 0 2px 8px rgba(232,160,32,0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md), 0 4px 16px rgba(232,160,32,0.4);
+}
+
+.btn-primary:active { transform: translateY(0); }
+
+.btn-save {
+  width: 100%;
+  font-size: 18px;
+  padding: 18px 32px;
+  min-height: 60px;
+  margin-top: 24px;
+}
+
+.btn-danger {
+  background: var(--red-light);
+  color: var(--red);
+  border: 2px solid transparent;
+}
+
+.btn-danger:hover {
+  background: var(--red);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 2px solid var(--gray-200);
+}
+
+.btn-secondary:hover {
+  background: var(--gray-200);
+}
+
+.btn-export {
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.btn-export:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: white;
+  padding: 16px 32px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: var(--shadow-lg);
+  transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast.show { bottom: 40px; }
+
+.toast.error { background: var(--red); }
+
+/* Saved list */
+.saved-list { display: flex; flex-direction: column; gap: 12px; }
+
+.saved-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all var(--transition);
+  border-left: 4px solid var(--green);
+}
+
+.saved-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.saved-card .sc-info { flex: 1; }
+.saved-card .sc-name { font-weight: 700; font-size: 16px; color: var(--primary); }
+.saved-card .sc-meta { font-size: 13px; color: var(--gray-500); margin-top: 4px; display: flex; gap: 16px; flex-wrap: wrap; }
+.saved-card .sc-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.saved-card .btn { min-height: 44px; padding: 10px 16px; font-size: 14px; }
+
+/* Progress */
+.progress-wrapper {
+  margin-bottom: 24px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--gray-700);
+}
+
+.progress-bar-bg {
+  height: 12px;
+  background: var(--gray-200);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--green-light));
+  border-radius: 6px;
+  transition: width 0.6s ease;
+}
+
+/* Dashboard */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.stat-card .stat-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.stat-card .stat-label {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.stat-card.gold .stat-value { color: var(--gold); }
+.stat-card.green .stat-value { color: var(--green); }
+
+.chart-section {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.chart-section h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--gray-100);
+}
+
+/* CSS Bar Chart */
+.bar-chart { display: flex; flex-direction: column; gap: 10px; }
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bar-label {
+  width: 140px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-700);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.bar-track {
+  flex: 1;
+  height: 28px;
+  background: var(--gray-100);
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  min-width: fit-content;
+  transition: width 0.6s ease;
+}
+
+.bar-fill.blue { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+.bar-fill.gold { background: linear-gradient(90deg, var(--gold), var(--gold-light)); color: var(--primary-dark); }
+.bar-fill.green { background: linear-gradient(90deg, var(--green), var(--green-light)); }
+.bar-fill.red { background: linear-gradient(90deg, var(--red), #ef5350); }
+
+.bar-value {
+  width: 40px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gray-700);
+  flex-shrink: 0;
+}
+
+/* Donut-like pill chart */
+.pill-chart {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.pill-item {
+  padding: 10px 18px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill-item .pill-count {
+  background: rgba(255,255,255,0.3);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.pill-green { background: #e8f5e9; color: var(--green); }
+.pill-gold { background: #fff8e1; color: #f57f17; }
+.pill-blue { background: #e3f2fd; color: var(--primary); }
+.pill-red { background: var(--red-light); color: var(--red); }
+.pill-gray { background: var(--gray-100); color: var(--gray-600); }
+
+/* Satisfaction colors */
+.sat-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.sat-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
+.sat-label { font-size: 14px; flex: 1; }
+.sat-count { font-weight: 700; font-size: 14px; }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--gray-400);
+}
+
+.empty-state .empty-icon { font-size: 64px; margin-bottom: 16px; }
+.empty-state h3 { font-size: 20px; color: var(--gray-600); margin-bottom: 8px; }
+.empty-state p { font-size: 15px; }
+
+/* Confirm dialog */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-overlay.show { display: flex; }
+
+.modal-box {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.modal-box h3 { font-size: 20px; margin-bottom: 12px; color: var(--gray-800); }
+.modal-box p { font-size: 15px; color: var(--gray-500); margin-bottom: 24px; }
+.modal-actions { display: flex; gap: 12px; justify-content: center; }
+
+/* Scrollable form */
+.form-scroll { max-height: none; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-content { padding: 16px; }
+  .card { padding: 16px; }
+  .header-content { gap: 12px; }
+  .header-text h1 { font-size: 18px; }
+  .tab-btn { font-size: 12px; padding: 12px 8px; }
+  .tab-btn .tab-label-full { display: none; }
+  .tab-btn .tab-label-short { display: inline; }
+  .bar-label { width: 100px; font-size: 12px; }
+  .section-header { font-size: 14px; }
+  .og-info-banner .og-meta { flex-direction: column; gap: 6px; }
+}
+
+@media (min-width: 769px) {
+  .tab-btn .tab-label-short { display: none; }
+}
+
+/* Import/Export Toolbar */
+.io-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-io {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-height: 50px;
+  font-family: inherit;
+  text-decoration: none;
+  flex: 1;
+  min-width: 180px;
+}
+
+.btn-io-export {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: var(--shadow), 0 2px 8px rgba(26,58,92,0.3);
+}
+
+.btn-io-export:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md), 0 4px 16px rgba(26,58,92,0.4);
+}
+
+.btn-io-export:active { transform: translateY(0); }
+
+.btn-io-import {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--primary-dark);
+  box-shadow: var(--shadow), 0 2px 8px rgba(232,160,32,0.3);
+}
+
+.btn-io-import:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md), 0 4px 16px rgba(232,160,32,0.4);
+}
+
+.btn-io-import:active { transform: translateY(0); }
+
+/* Hidden file input */
+.hidden-file-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Print */
+@media print {
+  .app-header, .tab-nav-wrapper, .btn-save, .btn-danger, .btn-export, .io-toolbar { display: none; }
+  .tab-panel { display: block !important; }
+  .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-content">
+    <div class="header-logo">&#x1F415;</div>
+    <div class="header-text">
+      <h1>VBSÖ Ortsgruppen-Fragebogen</h1>
+      <p>Verein Belgischer Schäferhunde Österreich &mdash; Besuchsprotokoll</p>
+    </div>
+  </div>
+</header>
+
+<div class="tab-nav-wrapper">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('fill')" id="tab-btn-fill">
+      <span class="tab-icon">&#x1F4CB;</span>
+      <span class="tab-label-full">Fragebogen ausfüllen</span>
+      <span class="tab-label-short">Fragebogen</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('saved')" id="tab-btn-saved">
+      <span class="tab-icon">&#x1F4C1;</span>
+      <span class="tab-label-full">Gespeicherte Fragebögen</span>
+      <span class="tab-label-short">Gespeichert</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('dashboard')" id="tab-btn-dashboard">
+      <span class="tab-icon">&#x1F4CA;</span>
+      <span class="tab-label-full">Auswertung</span>
+      <span class="tab-label-short">Auswertung</span>
+    </button>
+  </div>
+</div>
+
+<main class="main-content">
+
+<!-- TAB 1: FILL -->
+<div class="tab-panel active" id="panel-fill">
+
+  <div class="card">
+    <h2 style="font-size:18px; color:var(--primary); margin-bottom:12px;">Ortsgruppe auswählen</h2>
+    <div class="og-selector-grid">
+      <div class="og-select-wrapper">
+        <select id="og-select" onchange="onOGSelect()">
+          <option value="">-- Bitte Ortsgruppe wählen --</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="og-info-banner" id="og-info-banner">
+    <h2 id="og-banner-name"></h2>
+    <div class="og-meta">
+      <span>&#x1F4CD; <span id="og-banner-land"></span></span>
+      <span>&#x1F464; <span id="og-banner-kontakt"></span></span>
+    </div>
+  </div>
+
+  <div id="questionnaire-form" style="display:none;">
+
+    <!-- Header fields -->
+    <div class="card">
+      <div class="inline-fields" style="grid-template-columns:1fr 1fr 1fr;">
+        <div class="inline-field">
+          <label for="f-datum">Datum des Besuchs</label>
+          <input type="date" id="f-datum" data-field="datum">
+        </div>
+        <div class="inline-field">
+          <label for="f-ansprech">Ansprechperson / Funktion</label>
+          <input type="text" id="f-ansprech" data-field="ansprechperson" placeholder="Name, Funktion">
+        </div>
+        <div class="inline-field">
+          <label for="f-mitglieder">Anz. aktive Mitglieder</label>
+          <input type="number" id="f-mitglieder" data-field="mitglieder" min="0" placeholder="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div class="section-header"><span class="section-num">1</span> TRAINERAUSBILDUNG</div>
+
+    <div class="card">
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">1.1</span> Interesse an Trainerausbildung?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q1_1" id="q1_1_a" value="Ja definitiv" data-field="q1_1"><label for="q1_1_a">Ja definitiv</label></div>
+          <div class="radio-option"><input type="radio" name="q1_1" id="q1_1_b" value="Vielleicht / unklar" data-field="q1_1"><label for="q1_1_b">Vielleicht / unklar</label></div>
+          <div class="radio-option"><input type="radio" name="q1_1" id="q1_1_c" value="Derzeit kein Bedarf" data-field="q1_1"><label for="q1_1_c">Derzeit kein Bedarf</label></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">1.2</span> Konkreter Bedarf nach Trainertyp</div>
+        <table class="trainer-table">
+          <thead><tr><th>Auswahl</th><th>Trainertyp</th><th>Anzahl</th></tr></thead>
+          <tbody id="trainer-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">1.3</span> Personen, die eine Ausbildung anstreben?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q1_3" id="q1_3_a" value="Ja" data-field="q1_3"><label for="q1_3_a">Ja</label></div>
+          <div class="radio-option"><input type="radio" name="q1_3" id="q1_3_b" value="Nein" data-field="q1_3"><label for="q1_3_b">Nein</label></div>
+          <div class="radio-option"><input type="radio" name="q1_3" id="q1_3_c" value="Unbekannt" data-field="q1_3"><label for="q1_3_c">Unbekannt</label></div>
+        </div>
+        <div class="notes-field"><label>Anmerkungen</label><textarea data-field="q1_3_notes" rows="2" placeholder="Details..."></textarea></div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">1.4</span> Bevorzugte Ausbildungsform</div>
+        <div class="checkbox-group">
+          <div class="checkbox-option"><input type="checkbox" id="q1_4_a" data-field="q1_4" value="Zentraler Kurs"><label for="q1_4_a">Zentraler Kurs</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q1_4_b" data-field="q1_4" value="Regional vor Ort"><label for="q1_4_b">Regional vor Ort</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q1_4_c" data-field="q1_4" value="Online-Anteil"><label for="q1_4_c">Online-Anteil</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q1_4_d" data-field="q1_4" value="Egal"><label for="q1_4_d">Egal</label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="section-header"><span class="section-num">2</span> SPORTARTEN & AKTIVITÄTEN</div>
+
+    <div class="card">
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">2.1</span> Aktive Sportarten</div>
+        <div style="overflow-x:auto;">
+        <table class="sport-table">
+          <thead><tr><th>Aktiv</th><th>Sportart</th><th>Teilnehmer</th><th>Jugend</th></tr></thead>
+          <tbody id="sport-tbody"></tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">2.2</span> Prüfungen / Wettkämpfe ausgerichtet?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q2_2" id="q2_2_a" value="Ja regelmäßig" data-field="q2_2"><label for="q2_2_a">Ja, regelmäßig</label></div>
+          <div class="radio-option"><input type="radio" name="q2_2" id="q2_2_b" value="Gelegentlich" data-field="q2_2"><label for="q2_2_b">Gelegentlich</label></div>
+          <div class="radio-option"><input type="radio" name="q2_2" id="q2_2_c" value="Nein" data-field="q2_2"><label for="q2_2_c">Nein</label></div>
+        </div>
+        <div class="notes-field"><label>Art der Veranstaltungen</label><textarea data-field="q2_2_notes" rows="2" placeholder="Welche Prüfungen/Wettkämpfe..."></textarea></div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">2.3</span> Sollten zuchtrelevante Prüfungen ausschließlich in VBSÖ-Ortsgruppen stattfinden?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q2_3" id="q2_3_a" value="Ja ausschließlich" data-field="q2_3"><label for="q2_3_a">Ja, ausschließlich</label></div>
+          <div class="radio-option"><input type="radio" name="q2_3" id="q2_3_b" value="Eher ja" data-field="q2_3"><label for="q2_3_b">Eher ja</label></div>
+          <div class="radio-option"><input type="radio" name="q2_3" id="q2_3_c" value="Eher nein" data-field="q2_3"><label for="q2_3_c">Eher nein</label></div>
+          <div class="radio-option"><input type="radio" name="q2_3" id="q2_3_d" value="Nein" data-field="q2_3"><label for="q2_3_d">Nein</label></div>
+          <div class="radio-option"><input type="radio" name="q2_3" id="q2_3_e" value="Keine Meinung" data-field="q2_3"><label for="q2_3_e">Keine Meinung</label></div>
+        </div>
+        <div class="notes-field"><label>Begründung</label><textarea data-field="q2_3_notes" rows="2" placeholder="Begründung..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="section-header"><span class="section-num">3</span> VERHÄLTNIS ZUM DACHVERBAND VBSÖ</div>
+
+    <div class="card">
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">3.1</span> Wie ist die Zusammenarbeit mit dem VBSÖ?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q3_1" id="q3_1_a" value="Sehr gut" data-field="q3_1"><label for="q3_1_a">Sehr gut</label></div>
+          <div class="radio-option"><input type="radio" name="q3_1" id="q3_1_b" value="Gut" data-field="q3_1"><label for="q3_1_b">Gut</label></div>
+          <div class="radio-option"><input type="radio" name="q3_1" id="q3_1_c" value="Ausbaufähig" data-field="q3_1"><label for="q3_1_c">Ausbaufähig</label></div>
+          <div class="radio-option"><input type="radio" name="q3_1" id="q3_1_d" value="Mangelhaft" data-field="q3_1"><label for="q3_1_d">Mangelhaft</label></div>
+        </div>
+        <div class="notes-field"><label>Begründung</label><textarea data-field="q3_1_notes" rows="2" placeholder="Begründung..."></textarea></div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">3.2</span> Fühlen Sie sich ausreichend informiert?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q3_2" id="q3_2_a" value="Ja" data-field="q3_2"><label for="q3_2_a">Ja</label></div>
+          <div class="radio-option"><input type="radio" name="q3_2" id="q3_2_b" value="Teilweise" data-field="q3_2"><label for="q3_2_b">Teilweise</label></div>
+          <div class="radio-option"><input type="radio" name="q3_2" id="q3_2_c" value="Nein" data-field="q3_2"><label for="q3_2_c">Nein</label></div>
+        </div>
+        <div class="notes-field"><label>Anmerkungen</label><textarea data-field="q3_2_notes" rows="2" placeholder="Anmerkungen..."></textarea></div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">3.3</span> In welchen Bereichen wünschen Sie stärkere Unterstützung?</div>
+        <div class="checkbox-group">
+          <div class="checkbox-option"><input type="checkbox" id="q3_3_a" data-field="q3_3" value="Trainerausbildung"><label for="q3_3_a">Trainerausbildung</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q3_3_b" data-field="q3_3" value="Administrative Unterstützung"><label for="q3_3_b">Administrative Unterstützung</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q3_3_c" data-field="q3_3" value="Öffentlichkeitsarbeit"><label for="q3_3_c">Öffentlichkeitsarbeit</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q3_3_d" data-field="q3_3" value="Rechtliche Fragen"><label for="q3_3_d">Rechtliche Fragen</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q3_3_e" data-field="q3_3" value="Vernetzung"><label for="q3_3_e">Vernetzung</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q3_3_f" data-field="q3_3" value="Finanzielle Förderung"><label for="q3_3_f">Finanzielle Förderung</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q3_3_g" data-field="q3_3" value="Sonstiges"><label for="q3_3_g">Sonstiges</label></div>
+        </div>
+        <div class="notes-field"><label>Anmerkungen / Sonstiges</label><textarea data-field="q3_3_notes" rows="2" placeholder="Details..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="section-header"><span class="section-num">4</span> ÖFFENTLICHKEITSARBEIT & SOCIAL MEDIA</div>
+
+    <div class="card">
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">4.1</span> Eigene Social-Media-Präsenz?</div>
+        <div class="checkbox-group">
+          <div class="checkbox-option"><input type="checkbox" id="q4_1_a" data-field="q4_1" value="Facebook"><label for="q4_1_a">Facebook</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q4_1_b" data-field="q4_1" value="Instagram"><label for="q4_1_b">Instagram</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q4_1_c" data-field="q4_1" value="Website"><label for="q4_1_c">Website</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q4_1_d" data-field="q4_1" value="Nichts davon"><label for="q4_1_d">Nichts davon</label></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">4.2</span> Soll der VBSÖ Veranstaltungen bewerben?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q4_2" id="q4_2_a" value="Ja sehr hilfreich" data-field="q4_2"><label for="q4_2_a">Ja, sehr hilfreich</label></div>
+          <div class="radio-option"><input type="radio" name="q4_2" id="q4_2_b" value="Ja bestimmte" data-field="q4_2"><label for="q4_2_b">Ja, bestimmte</label></div>
+          <div class="radio-option"><input type="radio" name="q4_2" id="q4_2_c" value="Neutral" data-field="q4_2"><label for="q4_2_c">Neutral</label></div>
+          <div class="radio-option"><input type="radio" name="q4_2" id="q4_2_d" value="Eher nicht" data-field="q4_2"><label for="q4_2_d">Eher nicht</label></div>
+        </div>
+        <div class="notes-field"><label>Welche Art von Veranstaltungen?</label><textarea data-field="q4_2_notes" rows="2" placeholder="Details..."></textarea></div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">4.3</span> Bereitschaft, Veranstaltungsinfos zu liefern?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q4_3" id="q4_3_a" value="Ja gerne" data-field="q4_3"><label for="q4_3_a">Ja, gerne</label></div>
+          <div class="radio-option"><input type="radio" name="q4_3" id="q4_3_b" value="Wenn einfach" data-field="q4_3"><label for="q4_3_b">Wenn einfach</label></div>
+          <div class="radio-option"><input type="radio" name="q4_3" id="q4_3_c" value="Eher nicht" data-field="q4_3"><label for="q4_3_c">Eher nicht</label></div>
+        </div>
+        <div class="notes-field"><label>Bevorzugter Übermittlungsweg</label><textarea data-field="q4_3_notes" rows="2" placeholder="E-Mail, WhatsApp, Formular..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="section-header"><span class="section-num">5</span> MITGLIEDERENTWICKLUNG</div>
+
+    <div class="card">
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">5.1</span> Mehr Mitglieder gewünscht?</div>
+        <div class="radio-group">
+          <div class="radio-option"><input type="radio" name="q5_1" id="q5_1_a" value="Ja dringend" data-field="q5_1"><label for="q5_1_a">Ja, dringend</label></div>
+          <div class="radio-option"><input type="radio" name="q5_1" id="q5_1_b" value="Ja moderat" data-field="q5_1"><label for="q5_1_b">Ja, moderat</label></div>
+          <div class="radio-option"><input type="radio" name="q5_1" id="q5_1_c" value="Ausreichend" data-field="q5_1"><label for="q5_1_c">Ausreichend</label></div>
+          <div class="radio-option"><input type="radio" name="q5_1" id="q5_1_d" value="Eher nicht" data-field="q5_1"><label for="q5_1_d">Eher nicht</label></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">5.2</span> Aktuelle Maßnahmen zur Mitgliedergewinnung?</div>
+        <div class="checkbox-group">
+          <div class="checkbox-option"><input type="checkbox" id="q5_2_a" data-field="q5_2" value="Mundpropaganda"><label for="q5_2_a">Mundpropaganda</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_2_b" data-field="q5_2" value="Social Media"><label for="q5_2_b">Social Media</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_2_c" data-field="q5_2" value="Lokale Veranstaltungen"><label for="q5_2_c">Lokale Veranstaltungen</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_2_d" data-field="q5_2" value="Schnuppertage"><label for="q5_2_d">Schnuppertage</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_2_e" data-field="q5_2" value="Plakate / Flyer"><label for="q5_2_e">Plakate / Flyer</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_2_f" data-field="q5_2" value="Keine Maßnahmen"><label for="q5_2_f">Keine Maßnahmen</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_2_g" data-field="q5_2" value="Sonstiges"><label for="q5_2_g">Sonstiges</label></div>
+        </div>
+        <div class="notes-field"><label>Anmerkungen / Sonstiges</label><textarea data-field="q5_2_notes" rows="2" placeholder="Details..."></textarea></div>
+      </div>
+
+      <div class="form-group">
+        <div class="q-label"><span class="q-number">5.3</span> Gewünschte Unterstützung bei Mitgliedergewinnung?</div>
+        <div class="checkbox-group">
+          <div class="checkbox-option"><input type="checkbox" id="q5_3_a" data-field="q5_3" value="Werbekampagne"><label for="q5_3_a">Werbekampagne</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_3_b" data-field="q5_3" value="Verlinkung VBSÖ-Kanäle"><label for="q5_3_b">Verlinkung VBSÖ-Kanäle</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_3_c" data-field="q5_3" value="Überregionale Veranstaltungen"><label for="q5_3_c">Überregionale Veranstaltungen</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_3_d" data-field="q5_3" value="Muster-Flyer"><label for="q5_3_d">Muster-Flyer</label></div>
+          <div class="checkbox-option"><input type="checkbox" id="q5_3_e" data-field="q5_3" value="Sonstiges"><label for="q5_3_e">Sonstiges</label></div>
+        </div>
+        <div class="notes-field"><label>Anmerkungen / Sonstiges</label><textarea data-field="q5_3_notes" rows="2" placeholder="Details..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- Abschluss -->
+    <div class="section-header" style="background:linear-gradient(135deg, var(--gold), var(--gold-light)); color:var(--primary-dark);">
+      <span class="section-num" style="background:rgba(0,0,0,0.1);">&#x2714;</span> ABSCHLUSS
+    </div>
+
+    <div class="card">
+      <div class="form-group">
+        <label for="f-abschluss">Abschließende Anmerkungen</label>
+        <textarea id="f-abschluss" data-field="abschluss" rows="4" placeholder="Allgemeine Anmerkungen, Wünsche, Feedback..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="f-notizen">Sonstige Notizen</label>
+        <textarea id="f-notizen" data-field="notizen" rows="4" placeholder="Interne Notizen zum Besuch..."></textarea>
+      </div>
+
+      <button class="btn btn-primary btn-save" onclick="saveQuestionnaire()">
+        &#x1F4BE; Fragebogen speichern
+      </button>
+    </div>
+
+  </div><!-- /questionnaire-form -->
+
+</div><!-- /panel-fill -->
+
+<!-- Hidden file inputs for import -->
+<input type="file" accept=".json" class="hidden-file-input" id="import-file-saved" onchange="handleImport(this)">
+<input type="file" accept=".json" class="hidden-file-input" id="import-file-dashboard" onchange="handleImport(this)">
+
+<!-- TAB 2: SAVED -->
+<div class="tab-panel" id="panel-saved">
+  <div class="io-toolbar">
+    <button class="btn-io btn-io-export" onclick="exportJSON()">&#x1F4E4; Daten exportieren</button>
+    <button class="btn-io btn-io-import" onclick="document.getElementById('import-file-saved').click()">&#x1F4E5; Daten importieren</button>
+  </div>
+  <div class="progress-wrapper" id="progress-wrapper">
+    <div class="progress-label">
+      <span id="progress-text">0 von 25 Ortsgruppen besucht</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="saved-list" id="saved-list"></div>
+</div>
+
+<!-- TAB 3: DASHBOARD -->
+<div class="tab-panel" id="panel-dashboard">
+  <div class="io-toolbar">
+    <button class="btn-io btn-io-export" onclick="exportJSON()">&#x1F4E4; Daten exportieren</button>
+    <button class="btn-io btn-io-import" onclick="document.getElementById('import-file-dashboard').click()">&#x1F4E5; Daten importieren</button>
+  </div>
+  <div id="dashboard-content"></div>
+</div>
+
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <h3 id="modal-title">Bestätigung</h3>
+    <p id="modal-message">Möchten Sie diesen Eintrag wirklich löschen?</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
+      <button class="btn btn-danger" id="modal-confirm" onclick="closeModal()">Löschen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const ortsgruppen = [
+  { id: "stmk-1", name: "OG 22 Hundesport Premstätten", bundesland: "Steiermark", kontaktperson: "Nicole Posch-Pfeffer (Obfrau)" },
+  { id: "stmk-2", name: "OG 1 Markt Hartmannsdorf", bundesland: "Steiermark", kontaktperson: "Mag. Katharina Kribernegg (Obfrau)" },
+  { id: "stmk-3", name: "OG 6 Steingrub", bundesland: "Steiermark", kontaktperson: "Radl Harald (Obmann)" },
+  { id: "ktn-1", name: "OG 26 St. Veit an der Glan", bundesland: "Kärnten", kontaktperson: "Gerhard Gingel (Obmann)" },
+  { id: "ktn-2", name: "OG 19 Klagenfurt", bundesland: "Kärnten", kontaktperson: "Janesch Karl (Obmann)" },
+  { id: "ktn-3", name: "OG 28 Rosental", bundesland: "Kärnten", kontaktperson: "Sabine Pobisch (Obfrau)" },
+  { id: "ktn-4", name: "OG 13 Petzen", bundesland: "Kärnten", kontaktperson: "Kerstin Klade B A (Obfrau)" },
+  { id: "ktn-5", name: "OG Hermagor", bundesland: "Kärnten", kontaktperson: "Sabrina Sommer (Obfrau)" },
+  { id: "sbg-1", name: "OG 23 Fritztal", bundesland: "Salzburg", kontaktperson: "Gabriele Winter (Obfrau)" },
+  { id: "ooe-1", name: "Team HUNDETRAINING LEITNER", bundesland: "Oberösterreich", kontaktperson: "Leitner Andreas (Obmann)" },
+  { id: "ooe-2", name: "Team Mühl4tel", bundesland: "Oberösterreich", kontaktperson: "Kurt Hammerl (Obmann)" },
+  { id: "tir-1", name: "1. Tiroler Belgierverein Tiroler Bergtuifl", bundesland: "Tirol", kontaktperson: "Bernhard Mayerhofer (Obmann)" },
+  { id: "tir-2", name: "OG Spirkenhof", bundesland: "Tirol", kontaktperson: "Singer Klaus (Obmann)" },
+  { id: "noe-1", name: "OG 14 Bad Fischau", bundesland: "Niederösterreich", kontaktperson: "Manuela Curin (Obfrau)" },
+  { id: "noe-2", name: "OG 9 Möllersdorf", bundesland: "Niederösterreich", kontaktperson: "Burger Harald (Obmann)" },
+  { id: "noe-3", name: "OG 16 Baden", bundesland: "Niederösterreich", kontaktperson: "Xerach Garcia (Obmann)" },
+  { id: "noe-4", name: "OG 8 Enzersdorf/Fischa", bundesland: "Niederösterreich", kontaktperson: "Haas Romana (Obmann/Geschäftsstelle)" },
+  { id: "noe-5", name: "OG 5 Ebreichsdorf", bundesland: "Niederösterreich", kontaktperson: "Manuela Schlosser (Obfrau)" },
+  { id: "noe-6", name: "OG 17 Langenzersdorf", bundesland: "Niederösterreich", kontaktperson: "Georg Sticha (Obmann)" },
+  { id: "noe-7", name: "OG 25 Kremstal", bundesland: "Niederösterreich", kontaktperson: "Thomas Damböck (Obmann)" },
+  { id: "noe-8", name: "OG 27 Weinviertel", bundesland: "Niederösterreich", kontaktperson: "Natascha Unzeitig (Obfrau)" },
+  { id: "noe-9", name: "OG 02 Hundeschule Retz/Kleinhöflein", bundesland: "Niederösterreich", kontaktperson: "Erlacher Heike (Obfrau)" },
+  { id: "noe-10", name: "OG 24 Großharras", bundesland: "Niederösterreich", kontaktperson: "Thomas Kölbl (Obmann)" },
+  { id: "bgd-1", name: "OG 21 Blaufränkischland", bundesland: "Burgenland", kontaktperson: "Kallinger Gernot (Obmann)" },
+  { id: "bgd-2", name: "OG 7 Zurndorf", bundesland: "Burgenland", kontaktperson: "Gerald Odlozilik (Obmann)" }
+];
+
+const trainerTypes = ["Gehorsam", "Fährte", "Obedience", "Mondioring", "Stöbern", "Rettungshunde", "Agility", "Schutzhelfer IGP"];
+const sportTypes = ["IGP", "Begleithund (BH/VT)", "Obedience", "Mondioring", "Agility", "Rally Obedience", "Fährte", "Stöbern", "Rettungshunde"];
+
+const STORAGE_KEY = "vbsoe_fragebogen_v1";
+
+let currentOGId = null;
+let draftTimeout = null;
+
+// ===== INIT =====
+function init() {
+  populateOGSelect();
+  buildTrainerTable();
+  buildSportTable();
+  setupAutosave();
+}
+
+function populateOGSelect() {
+  const sel = document.getElementById('og-select');
+  const sorted = [...ortsgruppen].sort((a, b) => {
+    const bl = a.bundesland.localeCompare(b.bundesland);
+    return bl !== 0 ? bl : a.name.localeCompare(b.name);
+  });
+  let lastBL = '';
+  sorted.forEach(og => {
+    if (og.bundesland !== lastBL) {
+      const optg = document.createElement('optgroup');
+      optg.label = og.bundesland;
+      sel.appendChild(optg);
+      lastBL = og.bundesland;
+    }
+    const opt = document.createElement('option');
+    opt.value = og.id;
+    opt.textContent = og.name;
+    sel.lastChild.appendChild(opt);
+  });
+}
+
+function buildTrainerTable() {
+  const tbody = document.getElementById('trainer-tbody');
+  trainerTypes.forEach((t, i) => {
+    const tr = document.createElement('tr');
+    const safeId = 'trainer_' + i;
+    tr.innerHTML = `
+      <td><input type="checkbox" class="sport-check" id="${safeId}" data-trainer="${t}"></td>
+      <td><label for="${safeId}" style="cursor:pointer;font-weight:500;">${t}</label></td>
+      <td><input type="number" min="0" data-trainer-count="${t}" placeholder="0"></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function buildSportTable() {
+  const tbody = document.getElementById('sport-tbody');
+  sportTypes.forEach((s, i) => {
+    const tr = document.createElement('tr');
+    const safeId = 'sport_' + i;
+    tr.innerHTML = `
+      <td><input type="checkbox" class="sport-check" id="${safeId}" data-sport="${s}"></td>
+      <td><label for="${safeId}" style="cursor:pointer;font-weight:500;">${s}</label></td>
+      <td><input type="number" min="0" data-sport-count="${s}" placeholder="0"></td>
+      <td><input type="number" min="0" data-sport-youth="${s}" placeholder="0"></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ===== TAB SWITCHING =====
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-btn-' + tab).classList.add('active');
+
+  const panelMap = { fill: 'panel-fill', saved: 'panel-saved', dashboard: 'panel-dashboard' };
+  document.getElementById(panelMap[tab]).classList.add('active');
+
+  if (tab === 'saved') renderSavedList();
+  if (tab === 'dashboard') renderDashboard();
+}
+
+// ===== OG SELECT =====
+function onOGSelect() {
+  const sel = document.getElementById('og-select');
+  const ogId = sel.value;
+  const banner = document.getElementById('og-info-banner');
+  const form = document.getElementById('questionnaire-form');
+
+  if (!ogId) {
+    banner.classList.remove('visible');
+    form.style.display = 'none';
+    currentOGId = null;
+    return;
+  }
+
+  currentOGId = ogId;
+  const og = ortsgruppen.find(o => o.id === ogId);
+  document.getElementById('og-banner-name').textContent = og.name;
+  document.getElementById('og-banner-land').textContent = og.bundesland;
+  document.getElementById('og-banner-kontakt').textContent = og.kontaktperson;
+  banner.classList.add('visible');
+  form.style.display = 'block';
+
+  loadFormData(ogId);
+}
+
+// ===== FORM DATA =====
+function getFormData() {
+  const data = {};
+
+  // Simple inputs
+  document.querySelectorAll('#questionnaire-form input[data-field], #questionnaire-form textarea[data-field]').forEach(el => {
+    const f = el.dataset.field;
+    if (el.type === 'radio') {
+      if (el.checked) data[f] = el.value;
+    } else if (el.type === 'checkbox') {
+      // Handled by group below
+    } else {
+      data[f] = el.value;
+    }
+  });
+
+  // Checkbox groups
+  const cbGroups = {};
+  document.querySelectorAll('#questionnaire-form input[type="checkbox"][data-field]').forEach(el => {
+    const f = el.dataset.field;
+    if (!cbGroups[f]) cbGroups[f] = [];
+    if (el.checked) cbGroups[f].push(el.value);
+  });
+  Object.assign(data, cbGroups);
+
+  // Trainer data
+  data.trainers = {};
+  trainerTypes.forEach(t => {
+    const cb = document.querySelector(`[data-trainer="${t}"]`);
+    const cnt = document.querySelector(`[data-trainer-count="${t}"]`);
+    data.trainers[t] = { checked: cb ? cb.checked : false, count: cnt ? parseInt(cnt.value) || 0 : 0 };
+  });
+
+  // Sport data
+  data.sports = {};
+  sportTypes.forEach(s => {
+    const cb = document.querySelector(`[data-sport="${s}"]`);
+    const cnt = document.querySelector(`[data-sport-count="${s}"]`);
+    const y = document.querySelector(`[data-sport-youth="${s}"]`);
+    data.sports[s] = {
+      checked: cb ? cb.checked : false,
+      count: cnt ? parseInt(cnt.value) || 0 : 0,
+      youth: y ? parseInt(y.value) || 0 : 0
+    };
+  });
+
+  return data;
+}
+
+function setFormData(data) {
+  if (!data) { clearForm(); return; }
+
+  // Simple inputs
+  document.querySelectorAll('#questionnaire-form input[data-field], #questionnaire-form textarea[data-field]').forEach(el => {
+    const f = el.dataset.field;
+    if (el.type === 'radio') {
+      el.checked = data[f] === el.value;
+    } else if (el.type === 'checkbox') {
+      el.checked = Array.isArray(data[f]) && data[f].includes(el.value);
+    } else {
+      el.value = data[f] || '';
+    }
+  });
+
+  // Trainers
+  if (data.trainers) {
+    trainerTypes.forEach(t => {
+      const d = data.trainers[t] || {};
+      const cb = document.querySelector(`[data-trainer="${t}"]`);
+      const cnt = document.querySelector(`[data-trainer-count="${t}"]`);
+      if (cb) cb.checked = !!d.checked;
+      if (cnt) cnt.value = d.count || '';
+    });
+  }
+
+  // Sports
+  if (data.sports) {
+    sportTypes.forEach(s => {
+      const d = data.sports[s] || {};
+      const cb = document.querySelector(`[data-sport="${s}"]`);
+      const cnt = document.querySelector(`[data-sport-count="${s}"]`);
+      const y = document.querySelector(`[data-sport-youth="${s}"]`);
+      if (cb) cb.checked = !!d.checked;
+      if (cnt) cnt.value = d.count || '';
+      if (y) y.value = d.youth || '';
+    });
+  }
+}
+
+function clearForm() {
+  document.querySelectorAll('#questionnaire-form input, #questionnaire-form textarea').forEach(el => {
+    if (el.type === 'radio' || el.type === 'checkbox') el.checked = false;
+    else if (el.tagName === 'TEXTAREA' || el.type === 'text' || el.type === 'number' || el.type === 'date') el.value = '';
+  });
+}
+
+// ===== STORAGE =====
+function getAllData() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+
+function saveAllData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function loadFormData(ogId) {
+  const all = getAllData();
+  const entry = all[ogId];
+  if (entry) {
+    setFormData(entry);
+  } else {
+    clearForm();
+  }
+}
+
+function saveQuestionnaire() {
+  if (!currentOGId) { showToast('Bitte zuerst eine Ortsgruppe wählen.', true); return; }
+
+  const data = getFormData();
+  const now = new Date().toISOString();
+  data._savedAt = now;
+  data._lastSaved = now;
+  data._ogId = currentOGId;
+
+  const all = getAllData();
+  all[currentOGId] = data;
+  saveAllData(all);
+
+  showToast('Fragebogen erfolgreich gespeichert!');
+}
+
+// ===== AUTOSAVE =====
+function setupAutosave() {
+  document.getElementById('questionnaire-form').addEventListener('input', () => {
+    if (!currentOGId) return;
+    clearTimeout(draftTimeout);
+    draftTimeout = setTimeout(() => {
+      const data = getFormData();
+      const now = new Date().toISOString();
+      data._savedAt = now;
+      data._lastSaved = now;
+      data._ogId = currentOGId;
+      data._draft = true;
+      const all = getAllData();
+      all[currentOGId] = data;
+      saveAllData(all);
+    }, 2000);
+  });
+
+  document.getElementById('questionnaire-form').addEventListener('change', () => {
+    if (!currentOGId) return;
+    clearTimeout(draftTimeout);
+    draftTimeout = setTimeout(() => {
+      const data = getFormData();
+      const now = new Date().toISOString();
+      data._savedAt = now;
+      data._lastSaved = now;
+      data._ogId = currentOGId;
+      data._draft = true;
+      const all = getAllData();
+      all[currentOGId] = data;
+      saveAllData(all);
+    }, 500);
+  });
+}
+
+// ===== TOAST =====
+function showToast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = (isError ? '\u26A0 ' : '\u2705 ') + msg;
+  t.className = 'toast' + (isError ? ' error' : '');
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ===== SAVED LIST =====
+function renderSavedList() {
+  const all = getAllData();
+  const list = document.getElementById('saved-list');
+  const keys = Object.keys(all);
+
+  const count = keys.length;
+  const total = ortsgruppen.length;
+  const pct = Math.round((count / total) * 100);
+
+  document.getElementById('progress-text').textContent = `${count} von ${total} Ortsgruppen besucht`;
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-bar').style.width = pct + '%';
+
+  if (count === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">&#x1F4CB;</div>
+        <h3>Noch keine Fragebögen gespeichert</h3>
+        <p>Wählen Sie eine Ortsgruppe aus und füllen Sie den Fragebogen aus.</p>
+      </div>`;
+    return;
+  }
+
+  const sorted = keys.map(k => {
+    const og = ortsgruppen.find(o => o.id === k);
+    return { id: k, data: all[k], og };
+  }).filter(e => e.og).sort((a, b) => (b.data._savedAt || '').localeCompare(a.data._savedAt || ''));
+
+  list.innerHTML = sorted.map(e => {
+    const d = e.data;
+    const date = d.datum || (d._savedAt ? d._savedAt.substring(0, 10) : '');
+    const draft = d._draft ? ' (Entwurf)' : '';
+    return `
+      <div class="saved-card" onclick="openSaved('${e.id}')">
+        <div class="sc-info">
+          <div class="sc-name">${e.og.name}${draft}</div>
+          <div class="sc-meta">
+            <span>&#x1F4CD; ${e.og.bundesland}</span>
+            <span>&#x1F4C5; ${date || 'Kein Datum'}</span>
+            <span>&#x1F465; ${d.mitglieder || '?'} Mitglieder</span>
+          </div>
+        </div>
+        <div class="sc-actions" onclick="event.stopPropagation()">
+          <button class="btn btn-danger" onclick="confirmDelete('${e.id}')">&#x1F5D1;</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function openSaved(ogId) {
+  document.getElementById('og-select').value = ogId;
+  onOGSelect();
+  switchTab('fill');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function confirmDelete(ogId) {
+  const og = ortsgruppen.find(o => o.id === ogId);
+  document.getElementById('modal-title').textContent = 'Fragebogen löschen?';
+  document.getElementById('modal-message').textContent = `Möchten Sie den Fragebogen für "${og.name}" wirklich löschen?`;
+  document.getElementById('modal-confirm').onclick = () => {
+    const all = getAllData();
+    delete all[ogId];
+    saveAllData(all);
+    closeModal();
+    renderSavedList();
+    showToast('Fragebogen gelöscht.');
+  };
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+}
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  const all = getAllData();
+  const entries = Object.values(all);
+  const n = entries.length;
+  const container = document.getElementById('dashboard-content');
+
+  if (n === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">&#x1F4CA;</div>
+        <h3>Keine Daten zur Auswertung</h3>
+        <p>Speichern Sie mindestens einen Fragebogen, um die Auswertung zu sehen.</p>
+      </div>`;
+    return;
+  }
+
+  // Calculations
+  const avgMitglieder = Math.round(entries.reduce((s, e) => s + (parseInt(e.mitglieder) || 0), 0) / n);
+  const totalMitglieder = entries.reduce((s, e) => s + (parseInt(e.mitglieder) || 0), 0);
+
+  // Trainer interest
+  const trainerInterest = {};
+  ['Ja definitiv', 'Vielleicht / unklar', 'Derzeit kein Bedarf'].forEach(v => trainerInterest[v] = 0);
+  entries.forEach(e => { if (e.q1_1 && trainerInterest[e.q1_1] !== undefined) trainerInterest[e.q1_1]++; });
+
+  // Trainer types demand
+  const trainerDemand = {};
+  trainerTypes.forEach(t => trainerDemand[t] = 0);
+  entries.forEach(e => {
+    if (e.trainers) {
+      trainerTypes.forEach(t => { if (e.trainers[t] && e.trainers[t].checked) trainerDemand[t]++; });
+    }
+  });
+
+  // Sports
+  const sportStats = {};
+  sportTypes.forEach(s => sportStats[s] = { active: 0, participants: 0, youth: 0 });
+  entries.forEach(e => {
+    if (e.sports) {
+      sportTypes.forEach(s => {
+        if (e.sports[s] && e.sports[s].checked) {
+          sportStats[s].active++;
+          sportStats[s].participants += e.sports[s].count || 0;
+          sportStats[s].youth += e.sports[s].youth || 0;
+        }
+      });
+    }
+  });
+
+  // Zuchtrelevant
+  const zucht = {};
+  ['Ja ausschließlich', 'Eher ja', 'Eher nein', 'Nein', 'Keine Meinung'].forEach(v => zucht[v] = 0);
+  entries.forEach(e => { if (e.q2_3 && zucht[e.q2_3] !== undefined) zucht[e.q2_3]++; });
+
+  // Satisfaction
+  const sat = {};
+  ['Sehr gut', 'Gut', 'Ausbaufähig', 'Mangelhaft'].forEach(v => sat[v] = 0);
+  entries.forEach(e => { if (e.q3_1 && sat[e.q3_1] !== undefined) sat[e.q3_1]++; });
+  const satColors = { 'Sehr gut': '#2e7d32', 'Gut': '#4caf50', 'Ausbaufähig': '#ff9800', 'Mangelhaft': '#d32f2f' };
+
+  // Support needs 3.3
+  const support = {};
+  ['Trainerausbildung', 'Administrative Unterstützung', 'Öffentlichkeitsarbeit', 'Rechtliche Fragen', 'Vernetzung', 'Finanzielle Förderung', 'Sonstiges'].forEach(v => support[v] = 0);
+  entries.forEach(e => { if (Array.isArray(e.q3_3)) e.q3_3.forEach(v => { if (support[v] !== undefined) support[v]++; }); });
+
+  // Social media
+  const sm = {};
+  ['Facebook', 'Instagram', 'Website', 'Nichts davon'].forEach(v => sm[v] = 0);
+  entries.forEach(e => { if (Array.isArray(e.q4_1)) e.q4_1.forEach(v => { if (sm[v] !== undefined) sm[v]++; }); });
+
+  // Mitgliederentwicklung
+  const mitgl = {};
+  ['Ja dringend', 'Ja moderat', 'Ausreichend', 'Eher nicht'].forEach(v => mitgl[v] = 0);
+  entries.forEach(e => { if (e.q5_1 && mitgl[e.q5_1] !== undefined) mitgl[e.q5_1]++; });
+
+  // Build HTML
+  let html = '';
+
+  // Overview cards
+  html += `<div class="dashboard-grid">
+    <div class="stat-card"><div class="stat-value">${n}</div><div class="stat-label">Ortsgruppen besucht</div></div>
+    <div class="stat-card green"><div class="stat-value">${ortsgruppen.length - n}</div><div class="stat-label">Noch ausstehend</div></div>
+    <div class="stat-card gold"><div class="stat-value">${totalMitglieder}</div><div class="stat-label">Mitglieder gesamt</div></div>
+    <div class="stat-card"><div class="stat-value">${avgMitglieder}</div><div class="stat-label">\u00D8 Mitglieder pro OG</div></div>
+  </div>`;
+
+  // Trainerausbildung
+  html += `<div class="chart-section">
+    <h3>&#x1F393; Trainerausbildung - Interesse</h3>
+    <div class="pill-chart">
+      <div class="pill-item pill-green"><span class="pill-count">${trainerInterest['Ja definitiv']}</span> Ja definitiv</div>
+      <div class="pill-item pill-gold"><span class="pill-count">${trainerInterest['Vielleicht / unklar']}</span> Vielleicht / unklar</div>
+      <div class="pill-item pill-gray"><span class="pill-count">${trainerInterest['Derzeit kein Bedarf']}</span> Kein Bedarf</div>
+    </div>
+  </div>`;
+
+  html += `<div class="chart-section">
+    <h3>&#x1F3AF; Bedarf nach Trainertyp</h3>
+    <div class="bar-chart">${trainerTypes.map(t => {
+      const v = trainerDemand[t];
+      const pct = n > 0 ? Math.round((v / n) * 100) : 0;
+      return `<div class="bar-row"><div class="bar-label">${t}</div><div class="bar-track"><div class="bar-fill blue" style="width:${pct}%">${v > 0 ? v : ''}</div></div><div class="bar-value">${v}</div></div>`;
+    }).join('')}</div>
+  </div>`;
+
+  // Sports
+  html += `<div class="chart-section">
+    <h3>&#x26BD; Aktive Sportarten (Anzahl OGs)</h3>
+    <div class="bar-chart">${sportTypes.map(s => {
+      const v = sportStats[s].active;
+      const pct = n > 0 ? Math.round((v / n) * 100) : 0;
+      return `<div class="bar-row"><div class="bar-label">${s}</div><div class="bar-track"><div class="bar-fill green" style="width:${pct}%">${v > 0 ? v : ''}</div></div><div class="bar-value">${v}</div></div>`;
+    }).join('')}</div>
+  </div>`;
+
+  const totalParticipants = Object.values(sportStats).reduce((s, v) => s + v.participants, 0);
+  const totalYouth = Object.values(sportStats).reduce((s, v) => s + v.youth, 0);
+
+  html += `<div class="chart-section">
+    <h3>&#x1F465; Teilnehmer & Jugend nach Sportart</h3>
+    <div style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap;">
+      <div class="pill-item pill-blue"><span class="pill-count">${totalParticipants}</span> Teilnehmer gesamt</div>
+      <div class="pill-item pill-green"><span class="pill-count">${totalYouth}</span> Jugend gesamt</div>
+    </div>
+    <div class="bar-chart">${sportTypes.map(s => {
+      const p = sportStats[s].participants;
+      const y = sportStats[s].youth;
+      const maxP = Math.max(...Object.values(sportStats).map(v => v.participants), 1);
+      const pctP = Math.round((p / maxP) * 100);
+      const pctY = Math.round((y / maxP) * 100);
+      return `<div class="bar-row"><div class="bar-label">${s}</div><div class="bar-track">
+        <div class="bar-fill blue" style="width:${pctP}%;position:absolute;">${p > 0 ? p : ''}</div>
+        <div class="bar-fill gold" style="width:${pctY}%;position:absolute;top:50%;height:50%;border-radius:0 0 14px 14px;opacity:0.8;">${y > 0 ? y : ''}</div>
+      </div><div class="bar-value">${p}/${y}</div></div>`;
+    }).join('')}</div>
+    <div style="display:flex;gap:16px;margin-top:10px;font-size:13px;color:var(--gray-500);">
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:3px;background:var(--primary);display:inline-block;"></span> Teilnehmer</span>
+      <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:3px;background:var(--gold);display:inline-block;"></span> Jugend</span>
+    </div>
+  </div>`;
+
+  // Zuchtrelevante Prüfungen
+  html += `<div class="chart-section">
+    <h3>&#x1F3C6; Zuchtrelevante Prüfungen in VBSÖ-OGs?</h3>
+    <div class="bar-chart">${Object.entries(zucht).map(([k, v]) => {
+      const pct = n > 0 ? Math.round((v / n) * 100) : 0;
+      const cls = k.includes('Ja') ? 'green' : k === 'Nein' ? 'red' : k === 'Eher nein' ? 'gold' : 'blue';
+      return `<div class="bar-row"><div class="bar-label">${k}</div><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%">${v > 0 ? v : ''}</div></div><div class="bar-value">${v}</div></div>`;
+    }).join('')}</div>
+  </div>`;
+
+  // Satisfaction
+  html += `<div class="chart-section">
+    <h3>&#x1F91D; Zusammenarbeit mit VBSÖ</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      ${Object.entries(sat).map(([k, v]) => {
+        const pct = n > 0 ? Math.round((v / n) * 100) : 0;
+        return `<div class="sat-row"><div class="sat-dot" style="background:${satColors[k]}"></div><div class="sat-label">${k}</div><div style="flex:1;"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${satColors[k]};">${v > 0 ? v : ''}</div></div></div><div class="sat-count">${v}</div></div>`;
+      }).join('')}
+    </div>
+  </div>`;
+
+  // Support
+  html += `<div class="chart-section">
+    <h3>&#x1F4E2; Unterstützungsbedarf</h3>
+    <div class="bar-chart">${Object.entries(support).sort((a, b) => b[1] - a[1]).map(([k, v]) => {
+      const pct = n > 0 ? Math.round((v / n) * 100) : 0;
+      return `<div class="bar-row"><div class="bar-label">${k}</div><div class="bar-track"><div class="bar-fill gold" style="width:${pct}%">${v > 0 ? v : ''}</div></div><div class="bar-value">${v}</div></div>`;
+    }).join('')}</div>
+  </div>`;
+
+  // Social Media
+  html += `<div class="chart-section">
+    <h3>&#x1F4F1; Social-Media-Präsenz</h3>
+    <div class="pill-chart">
+      ${Object.entries(sm).map(([k, v]) => {
+        const cls = k === 'Facebook' ? 'pill-blue' : k === 'Instagram' ? 'pill-red' : k === 'Website' ? 'pill-green' : 'pill-gray';
+        return `<div class="pill-item ${cls}"><span class="pill-count">${v}</span> ${k}</div>`;
+      }).join('')}
+    </div>
+  </div>`;
+
+  // Mitgliederentwicklung
+  html += `<div class="chart-section">
+    <h3>&#x1F4C8; Mitgliederentwicklung - Bedarf</h3>
+    <div class="bar-chart">${Object.entries(mitgl).map(([k, v]) => {
+      const pct = n > 0 ? Math.round((v / n) * 100) : 0;
+      const cls = k.includes('dringend') ? 'red' : k.includes('moderat') ? 'gold' : k === 'Ausreichend' ? 'green' : 'blue';
+      return `<div class="bar-row"><div class="bar-label">${k}</div><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%">${v > 0 ? v : ''}</div></div><div class="bar-value">${v}</div></div>`;
+    }).join('')}</div>
+  </div>`;
+
+  // CSV Export
+  html += `<div style="text-align:center;margin-top:24px;margin-bottom:24px;">
+    <button class="btn btn-export" onclick="exportCSV()">&#x1F4C4; CSV Export (Tabellenkalkulation)</button>
+  </div>`;
+
+  container.innerHTML = html;
+}
+
+// ===== CSV EXPORT =====
+function exportCSV() {
+  const all = getAllData();
+  const entries = Object.entries(all);
+  if (entries.length === 0) { showToast('Keine Daten zum Exportieren.', true); return; }
+
+  const headers = [
+    'OG_ID', 'OG_Name', 'Bundesland', 'Kontaktperson', 'Datum', 'Ansprechperson', 'Mitglieder',
+    'Q1.1_Trainerinteresse', 'Q1.3_Personen_Ausbildung', 'Q1.3_Anmerkungen', 'Q1.4_Ausbildungsform',
+    ...trainerTypes.map(t => 'Trainer_' + t), ...trainerTypes.map(t => 'Trainer_Anz_' + t),
+    ...sportTypes.map(s => 'Sport_' + s), ...sportTypes.map(s => 'Sport_Teilnehmer_' + s), ...sportTypes.map(s => 'Sport_Jugend_' + s),
+    'Q2.2_Prüfungen', 'Q2.2_Art', 'Q2.3_Zuchtrelevant', 'Q2.3_Begründung',
+    'Q3.1_Zusammenarbeit', 'Q3.1_Begründung', 'Q3.2_Informiert', 'Q3.2_Anmerkungen', 'Q3.3_Unterstützung', 'Q3.3_Anmerkungen',
+    'Q4.1_SocialMedia', 'Q4.2_Bewerben', 'Q4.2_Art', 'Q4.3_Infos_liefern', 'Q4.3_Übermittlungsweg',
+    'Q5.1_Mehr_Mitglieder', 'Q5.2_Maßnahmen', 'Q5.2_Anmerkungen', 'Q5.3_Unterstützung', 'Q5.3_Anmerkungen',
+    'Abschluss', 'Notizen'
+  ];
+
+  const esc = v => {
+    if (v === undefined || v === null) return '';
+    const s = String(v);
+    if (s.includes(';') || s.includes('"') || s.includes('\n')) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  };
+
+  const rows = [headers.join(';')];
+  entries.forEach(([ogId, d]) => {
+    const og = ortsgruppen.find(o => o.id === ogId) || {};
+    const row = [
+      ogId, og.name, og.bundesland, og.kontaktperson, d.datum, d.ansprechperson, d.mitglieder,
+      d.q1_1, d.q1_3, d.q1_3_notes, Array.isArray(d.q1_4) ? d.q1_4.join(', ') : '',
+      ...trainerTypes.map(t => d.trainers && d.trainers[t] ? (d.trainers[t].checked ? 'Ja' : 'Nein') : ''),
+      ...trainerTypes.map(t => d.trainers && d.trainers[t] ? d.trainers[t].count : ''),
+      ...sportTypes.map(s => d.sports && d.sports[s] ? (d.sports[s].checked ? 'Ja' : 'Nein') : ''),
+      ...sportTypes.map(s => d.sports && d.sports[s] ? d.sports[s].count : ''),
+      ...sportTypes.map(s => d.sports && d.sports[s] ? d.sports[s].youth : ''),
+      d.q2_2, d.q2_2_notes, d.q2_3, d.q2_3_notes,
+      d.q3_1, d.q3_1_notes, d.q3_2, d.q3_2_notes,
+      Array.isArray(d.q3_3) ? d.q3_3.join(', ') : '', d.q3_3_notes,
+      Array.isArray(d.q4_1) ? d.q4_1.join(', ') : '', d.q4_2, d.q4_2_notes, d.q4_3, d.q4_3_notes,
+      d.q5_1, Array.isArray(d.q5_2) ? d.q5_2.join(', ') : '', d.q5_2_notes,
+      Array.isArray(d.q5_3) ? d.q5_3.join(', ') : '', d.q5_3_notes,
+      d.abschluss, d.notizen
+    ];
+    rows.push(row.map(esc).join(';'));
+  });
+
+  const bom = '\uFEFF';
+  const blob = new Blob([bom + rows.join('\n')], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'VBSOE_Fragebogen_Export_' + new Date().toISOString().substring(0, 10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV-Datei wurde heruntergeladen.');
+}
+
+// ===== JSON EXPORT =====
+function exportJSON() {
+  const all = getAllData();
+  const entries = Object.entries(all);
+  if (entries.length === 0) { showToast('Keine Daten zum Exportieren.', true); return; }
+
+  // Ensure all entries have _lastSaved
+  entries.forEach(([k, v]) => {
+    if (!v._lastSaved) {
+      v._lastSaved = v._savedAt || new Date().toISOString();
+      all[k] = v;
+    }
+  });
+  saveAllData(all);
+
+  const exportData = {
+    _meta: {
+      version: 1,
+      exportDate: new Date().toISOString(),
+      device: navigator.userAgent,
+      entryCount: entries.length
+    },
+    questionnaires: all
+  };
+
+  const json = JSON.stringify(exportData, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'VBSOE_Daten_' + new Date().toISOString().substring(0, 10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 100);
+  showToast('JSON-Datei wurde heruntergeladen.');
+}
+
+// ===== JSON IMPORT =====
+function handleImport(fileInput) {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  // Reset input so the same file can be selected again
+  const inputId = fileInput.id;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const content = e.target.result;
+      let importData;
+
+      try {
+        importData = JSON.parse(content);
+      } catch (parseErr) {
+        showToast('Fehler: Die Datei enthält kein gültiges JSON-Format.', true);
+        fileInput.value = '';
+        return;
+      }
+
+      // Validate structure
+      if (!importData || typeof importData !== 'object') {
+        showToast('Fehler: Ungültiges Dateiformat.', true);
+        fileInput.value = '';
+        return;
+      }
+
+      // Support both formats: with _meta wrapper or plain data
+      let imported;
+      if (importData._meta && importData.questionnaires) {
+        imported = importData.questionnaires;
+      } else if (importData._meta) {
+        showToast('Fehler: Datei enthält keine Fragebogendaten.', true);
+        fileInput.value = '';
+        return;
+      } else {
+        // Try treating as raw questionnaire data (backward compat)
+        imported = importData;
+      }
+
+      if (typeof imported !== 'object' || Array.isArray(imported)) {
+        showToast('Fehler: Ungültige Datenstruktur in der Datei.', true);
+        fileInput.value = '';
+        return;
+      }
+
+      // Validate that keys look like OG IDs
+      const importKeys = Object.keys(imported);
+      if (importKeys.length === 0) {
+        showToast('Fehler: Keine Fragebögen in der Datei gefunden.', true);
+        fileInput.value = '';
+        return;
+      }
+
+      // Merge logic
+      const local = getAllData();
+      let added = 0;
+      let updated = 0;
+      let skipped = 0;
+
+      importKeys.forEach(ogId => {
+        const importEntry = imported[ogId];
+        if (!importEntry || typeof importEntry !== 'object') return;
+
+        // Ensure _lastSaved on import entry
+        if (!importEntry._lastSaved) {
+          importEntry._lastSaved = importEntry._savedAt || new Date(0).toISOString();
+        }
+
+        if (!local[ogId]) {
+          // Only exists in import -> add it
+          local[ogId] = importEntry;
+          added++;
+        } else {
+          // Exists on both sides -> compare
+          const localEntry = local[ogId];
+          if (!localEntry._lastSaved) {
+            localEntry._lastSaved = localEntry._savedAt || new Date(0).toISOString();
+          }
+
+          // First compare by "Datum des Besuchs"
+          const localDatum = localEntry.datum || '';
+          const importDatum = importEntry.datum || '';
+
+          if (importDatum > localDatum) {
+            // Import has newer visit date
+            local[ogId] = importEntry;
+            updated++;
+          } else if (importDatum < localDatum) {
+            // Local has newer visit date -> keep local
+            skipped++;
+          } else {
+            // Same visit date -> compare _lastSaved
+            const localSaved = localEntry._lastSaved || '';
+            const importSaved = importEntry._lastSaved || '';
+
+            if (importSaved > localSaved) {
+              local[ogId] = importEntry;
+              updated++;
+            } else {
+              skipped++;
+            }
+          }
+        }
+      });
+
+      saveAllData(local);
+
+      // Build summary message
+      const parts = [];
+      if (added > 0) parts.push(added + ' importiert');
+      if (updated > 0) parts.push(updated + ' aktualisiert');
+      if (skipped > 0) parts.push(skipped + ' bereits vorhanden');
+      const summary = parts.length > 0 ? parts.join(', ') : 'Keine Änderungen';
+      showToast(summary + ' (' + importKeys.length + ' Fragebögen in Datei)');
+
+      // Refresh views
+      renderSavedList();
+      renderDashboard();
+
+      // If currently editing an OG, reload its data
+      if (currentOGId) {
+        loadFormData(currentOGId);
+      }
+
+    } catch (err) {
+      showToast('Fehler beim Import: ' + err.message, true);
+    }
+
+    fileInput.value = '';
+  };
+
+  reader.onerror = function() {
+    showToast('Fehler: Datei konnte nicht gelesen werden.', true);
+    fileInput.value = '';
+  };
+
+  reader.readAsText(file);
+}
+
+// ===== START =====
+init();
+</script>
+</body>
+</html>
