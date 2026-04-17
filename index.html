@@ -895,6 +895,13 @@ textarea { min-height: 100px; resize: vertical; }
   overflow: hidden;
 }
 
+/* iPad Apple Pencil - Tastatur statt Scribble */
+input[type="text"],
+input[type="number"],
+textarea {
+  -webkit-user-modify: read-write-plaintext-only;
+}
+
 /* Print */
 @media print {
   .app-header, .tab-nav-wrapper, .btn-save, .btn-danger, .btn-export, .io-toolbar { display: none; }
@@ -1248,6 +1255,21 @@ textarea { min-height: 100px; resize: vertical; }
 </div>
 
 <script>
+// ===== APPLE PENCIL FIX =====
+// iPad: Apple Pencil aktiviert Scribble statt Tastatur.
+// Dieser Fix erkennt Pencil-Eingaben und öffnet die Tastatur.
+document.addEventListener('pointerdown', function(e) {
+  if (e.pointerType === 'pen') {
+    const tag = e.target.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') {
+      e.preventDefault();
+      e.target.focus();
+      // Kurze Verzögerung damit iPadOS die Tastatur zeigt
+      setTimeout(function() { e.target.click(); }, 50);
+    }
+  }
+}, { capture: true });
+
 // ===== DATA =====
 const ortsgruppen = [
   { id: "stmk-1", name: "OG 22 Hundesport Premstätten", bundesland: "Steiermark", kontaktperson: "Nicole Posch-Pfeffer (Obfrau)" },
